@@ -24,18 +24,18 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   List<BoardingModel> onBoarding = [
     BoardingModel(
       image: "assets/images/1.png",
-      title: "Title 1",
-      subTitle: "Sub Title 1",
+      title: "Fast Deliver",
+      subTitle: "Choose your location and we'll deliver it to you :)",
     ),
     BoardingModel(
       image: "assets/images/2.png",
-      title: "Title 2",
-      subTitle: "Sub Title 2",
+      title: "Different Choices",
+      subTitle: "Choose your favourite product from Our products :) ",
     ),
     BoardingModel(
       image: "assets/images/3.png",
-      title: "Title 3",
-      subTitle: "Sub Title 3",
+      title: "Community Help",
+      subTitle: "Communicates with our community members :) ",
     ),
   ];
 
@@ -56,7 +56,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       actions: [
         TextButton(
           onPressed: () {
-            pushAndRemoveUntil(const LoginView());
+            pushAndRemoveUntil( LoginView());
           },
           child: Text(
             "SKIP",
@@ -73,7 +73,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   Widget buildBody(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.all(30),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 25, vertical: 25),
       child: Column(
         children: [
           Expanded(
@@ -111,7 +111,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               FloatingActionButton(
                 onPressed: () {
                   if (isLast) {
-                    pushAndRemoveUntil(const LoginView());
+                    pushAndRemoveUntil( LoginView());
                   } else {
                     pageCtrl.nextPage(
                       duration: const Duration(milliseconds: 500),
@@ -134,6 +134,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           Expanded(
             child: Image.asset(
               model.image,
+              color: Theme.of(context).primaryColor.withOpacity(0.7),
+              colorBlendMode: BlendMode.modulate,
             ),
           ),
           const SizedBox(
