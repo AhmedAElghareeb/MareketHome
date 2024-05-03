@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:market_home/core/cache.dart';
 import 'package:market_home/core/helper.dart';
 import 'package:market_home/views/login/view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -43,6 +44,17 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   bool isLast = false;
 
+  void done() {
+    CachedData.saveUserData(
+      key: "onBoarding",
+      value: true,
+    ).then((value) {
+      if (value) {
+        pushAndRemoveUntil(LoginView());
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +68,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       actions: [
         TextButton(
           onPressed: () {
-            pushAndRemoveUntil( LoginView());
+            done();
           },
           child: Text(
             "SKIP",
@@ -73,7 +85,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   Widget buildBody(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 25, vertical: 25),
+      padding:
+          const EdgeInsetsDirectional.symmetric(horizontal: 25, vertical: 25),
       child: Column(
         children: [
           Expanded(
@@ -111,7 +124,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               FloatingActionButton(
                 onPressed: () {
                   if (isLast) {
-                    pushAndRemoveUntil( LoginView());
+                    done();
                   } else {
                     pageCtrl.nextPage(
                       duration: const Duration(milliseconds: 500),
@@ -134,8 +147,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           Expanded(
             child: Image.asset(
               model.image,
-              color: Theme.of(context).primaryColor.withOpacity(0.7),
-              colorBlendMode: BlendMode.modulate,
             ),
           ),
           const SizedBox(

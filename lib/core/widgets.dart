@@ -8,7 +8,9 @@ Widget appInput(
   required TextEditingController controller,
   required TextInputType textInputType,
   required IconData prefixIcon,
+  VoidCallback? onSuffixPressed,
   IconData? suffixIcon,
+  bool isPassword = false,
 }) =>
     TextFormField(
       controller: controller,
@@ -17,11 +19,12 @@ Widget appInput(
       },
       validator: (val) {
         if (val!.isEmpty) {
-          return "This Field Required!!!";
+          return "This Field is Required!!!";
         }
         return null;
       },
       keyboardType: textInputType,
+      obscureText: isPassword,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -58,10 +61,15 @@ Widget appInput(
           color: Theme.of(context).primaryColor,
           size: 22,
         ),
-        suffixIcon: Icon(
-          suffixIcon,
-          color: Theme.of(context).primaryColor,
-          size: 22,
+        suffixIcon: IconButton(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          icon: Icon(
+            suffixIcon,
+            color: Theme.of(context).primaryColor,
+            size: 22,
+          ),
+          onPressed: onSuffixPressed,
         ),
       ),
     );
