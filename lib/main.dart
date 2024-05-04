@@ -6,13 +6,14 @@ import 'package:market_home/core/helper.dart';
 import 'package:market_home/observer.dart';
 import 'package:market_home/views/home/view.dart';
 import 'package:market_home/views/login/view.dart';
+import 'package:market_home/views/onboarding_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
   await CachedData.init();
 
-  Widget? widget;
+  Widget widget = const OnBoardingView();
 
   bool onBoarding = CachedData.getData(key: "onBoarding") ?? false;
   String token = CachedData.getData(key: "token") ?? "";
@@ -27,7 +28,7 @@ void main() async {
 
   runApp(
     MyApp(
-      start: widget!,
+      start: widget,
     ),
   );
 }
