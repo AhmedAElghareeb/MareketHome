@@ -20,6 +20,8 @@ Widget appInput(
       validator: (val) {
         if (val!.isEmpty) {
           return "This Field is Required!!!";
+        } else if (textInputType == TextInputType.phone && val.length < 11) {
+          return "Phone Number Must be 11 Digits!!";
         }
         return null;
       },

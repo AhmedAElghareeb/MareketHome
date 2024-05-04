@@ -114,7 +114,7 @@ class LoginView extends StatelessWidget {
                           subText: "Register",
                           onTap: () {
                             push(
-                              const RegisterView(),
+                              RegisterView(),
                             );
                           },
                         ),
