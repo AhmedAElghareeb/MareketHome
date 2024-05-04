@@ -2,44 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_home/core/end_points.dart';
 import 'package:market_home/services/dio.dart';
-import 'package:market_home/views/login/model.dart';
-import 'package:market_home/views/register/states.dart';
+import 'package:market_home/views/auth/login/model.dart';
+import 'package:market_home/views/auth/login/states.dart';
 
-class RegisterCubit extends Cubit<RegisterStates> {
-  RegisterCubit() : super(RegisterStates());
+class LoginCubit extends Cubit<LoginStates> {
+  LoginCubit() : super(LoginStates());
 
-  static RegisterCubit get(context) => BlocProvider.of(context);
+  static LoginCubit get(context) => BlocProvider.of(context);
 
   LoginModel? loginModel;
 
-  void userRegister({
-    required String name,
+  void userLogin({
     required String email,
     required String password,
-    required String phone,
   }) {
     emit(
-      LoadingRegisterState(),
+      LoadingLoginState(),
     );
-
     DioHelper.i.postData(
-      path: register,
+      path: login,
       data: {
-        "name": name,
         "email": email,
         "password": password,
-        "phone": phone,
       },
     ).then((value) {
       loginModel = LoginModel.fromJson(value.data);
       emit(
-        SuccessRegisterState(
-          loginModel!,
-        ),
+        SuccessLoginState(loginModel!),
       );
     }).catchError((error) {
       emit(
-        FailedRegisterState(
+        FailedLoginState(
           error.toString(),
         ),
       );

@@ -1,4 +1,5 @@
-import 'package:market_home/views/login/model.dart';
+
+import 'package:market_home/views/auth/login/model.dart';
 
 class RegisterStates {}
 

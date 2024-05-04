@@ -4,12 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_home/core/cache.dart';
 import 'package:market_home/core/helper.dart';
 import 'package:market_home/observer.dart';
-import 'package:market_home/views/home/view.dart';
-import 'package:market_home/views/login/view.dart';
+import 'package:market_home/views/auth/login/view.dart';
+import 'package:market_home/views/home_nav.dart';
 import 'package:market_home/views/onboarding_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.grey[100],
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
   Bloc.observer = AppBlocObserver();
   await CachedData.init();
 
@@ -20,7 +26,7 @@ void main() async {
 
   if (onBoarding) {
     if (token.isNotEmpty) {
-      widget = const HomeView();
+      widget = const HomeNav();
     } else {
       widget = LoginView();
     }
@@ -47,15 +53,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.grey[100],
         fontFamily: "BriemHand",
         platform: TargetPlatform.iOS,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           elevation: 0,
-          systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: Colors.white,
-              statusBarIconBrightness: Brightness.dark),
+        ),
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: Colors.grey[100],
         ),
         useMaterial3: false,
       ),

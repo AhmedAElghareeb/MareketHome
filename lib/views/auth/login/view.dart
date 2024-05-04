@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_home/core/cache.dart';
 import 'package:market_home/core/helper.dart';
 import 'package:market_home/core/widgets.dart';
-import 'package:market_home/views/home/view.dart';
-import 'package:market_home/views/login/cubit.dart';
-import 'package:market_home/views/login/states.dart';
-import 'package:market_home/views/register/view.dart';
+import 'package:market_home/views/auth/login/cubit.dart';
+import 'package:market_home/views/auth/login/states.dart';
+import 'package:market_home/views/auth/register/view.dart';
+import 'package:market_home/views/home_nav.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
@@ -32,7 +32,7 @@ class LoginView extends StatelessWidget {
                 key: "token",
                 value: state.loginModel.data.token,
               );
-              pushAndRemoveUntil(const HomeView());
+              pushAndRemoveUntil(const HomeNav());
             } else {
               FlashHelper.showToast(state.loginModel.message);
             }

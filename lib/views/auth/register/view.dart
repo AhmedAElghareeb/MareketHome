@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_home/core/cache.dart';
 import 'package:market_home/core/helper.dart';
 import 'package:market_home/core/widgets.dart';
-import 'package:market_home/views/login/view.dart';
-import 'package:market_home/views/register/cubit.dart';
-import 'package:market_home/views/register/states.dart';
+import 'package:market_home/views/auth/login/view.dart';
+import 'package:market_home/views/auth/register/cubit.dart';
+import 'package:market_home/views/auth/register/states.dart';
 
 class RegisterView extends StatelessWidget {
   RegisterView({super.key});
