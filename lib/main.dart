@@ -59,8 +59,11 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
           centerTitle: false,
-          titleSpacing: 18,
+          titleSpacing: 12,
           elevation: 0,
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
         ),
         bottomSheetTheme: const BottomSheetThemeData(
           backgroundColor: Colors.transparent,

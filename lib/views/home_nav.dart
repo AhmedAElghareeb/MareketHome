@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:market_home/core/custom_image.dart';
 import 'package:market_home/core/themes.dart';
-import 'package:market_home/views/base/categories/view.dart';
 import 'package:market_home/views/base/favourite/view.dart';
 import 'package:market_home/views/base/home/view.dart';
 import 'package:market_home/views/base/notification/view.dart';
@@ -28,7 +27,6 @@ class _HomeNavState extends State<HomeNav> {
   void initPages() {
     pages = const [
       HomeView(),
-      CategoriesView(),
       FavouriteView(),
       NotificationView(),
       SettingsView(),
@@ -39,10 +37,6 @@ class _HomeNavState extends State<HomeNav> {
     {
       "name": "Home",
       "icon": "assets/icons/home.svg",
-    },
-    {
-      "name": "Categories",
-      "icon": "assets/icons/category.svg",
     },
     {
       "name": "Favourites",
@@ -65,7 +59,7 @@ class _HomeNavState extends State<HomeNav> {
         title: const Text(
           "Market Home",
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 24,
             fontWeight: FontWeight.w700,
             color: Colors.black,
           ),

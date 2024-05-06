@@ -2,8 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:market_home/core/helper.dart';
 import 'package:market_home/core/themes.dart';
 import 'package:market_home/core/widgets.dart';
+import 'package:market_home/views/base/categories/cubit.dart';
+import 'package:market_home/views/base/categories/model.dart';
+import 'package:market_home/views/base/categories/view.dart';
 import 'package:market_home/views/base/home/cubit.dart';
 import 'package:market_home/views/base/home/model.dart';
 import 'package:market_home/views/base/home/states.dart';
@@ -14,19 +18,27 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomeCubit()..getHomeData(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => HomeCubit()..getHomeData(),
+        ),
+        BlocProvider(
+          create: (context) => CategoriesCubit()..getCategories(),
+        ),
+      ],
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          final cubit = HomeCubit.get(context);
+          final homeCubit = HomeCubit.get(context);
+          final categoriesCubit = CategoriesCubit.get(context);
           return SafeArea(
             child: ConditionalBuilder(
-              condition: cubit.homeModel != null,
-              builder: (context) => buildProductsBuilder(
-                context,
-                model: cubit.homeModel!,
-              ),
+              condition: homeCubit.homeModel != null &&
+                  categoriesCubit.categoriesModel != null,
+              builder: (context) => buildProductsBuilder(context,
+                  model: homeCubit.homeModel!,
+                  categoriesModel: categoriesCubit.categoriesModel!),
               fallback: (context) => const Center(
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
@@ -40,26 +52,94 @@ class HomeView extends StatelessWidget {
   }
 
   Widget buildProductsBuilder(BuildContext context,
-          {required HomeModel model}) =>
+          {required HomeModel model,
+          required CategoriesModel categoriesModel}) =>
       SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildBanners(model),
             const SizedBox(
-              height: 12,
+              height: 16,
             ),
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-              childAspectRatio: 1 / 1.59,
-              physics: const NeverScrollableScrollPhysics(),
-              children: List.generate(
-                model.data.products.length,
-                (index) => buildItemOfGrid(
-                  model.data.products[index],
-                  index,
+            Padding(
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Categories",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      push(const CategoriesView());
+                    },
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    child: const Text(
+                      "See All",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            SizedBox(
+              height: 150,
+              child: ListView.builder(
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: 12
+                ),
+                itemBuilder: (context, index) => buildCategoryItem(
+                  categoriesModel.data.list[index],
+                ),
+                itemCount: categoriesModel.data.list.length,
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            const Padding(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 12),
+              child: Text(
+                "All Products",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+              child: GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: 1 / 1.57,
+                physics: const NeverScrollableScrollPhysics(),
+                children: List.generate(
+                  model.data.products.length,
+                  (index) => buildItemOfGrid(
+                    model.data.products[index],
+                    index,
+                  ),
                 ),
               ),
             ),
@@ -67,8 +147,46 @@ class HomeView extends StatelessWidget {
         ),
       );
 
+  Widget buildCategoryItem(CategoriesDataModel model) => Padding(
+        padding: const EdgeInsetsDirectional.only(
+          end: 12,
+        ),
+        child: Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+          child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              cachedImage(
+                imageUrl: model.image,
+                fit: BoxFit.cover,
+                width: 150,
+                height: 150,
+              ),
+              Container(
+                color: Colors.black.withOpacity(0.8),
+                width: 150,
+                child: Text(
+                  model.name.toUpperCase(),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+
   Widget buildItemOfGrid(ProductsModel model, int index) => Container(
-        color: Colors.white,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(
+            15,
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -155,10 +273,18 @@ class HomeView extends StatelessWidget {
         items: [
           ...List.generate(
             model.data.banners.length,
-            (index) => cachedImage(
-              imageUrl: model.data.banners[index].image,
-              width: double.infinity,
-              fit: BoxFit.cover,
+            (index) => Container(
+              margin: const EdgeInsetsDirectional.symmetric(
+                horizontal: 12,
+              ),
+              clipBehavior: Clip.antiAlias,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
+              child: cachedImage(
+                imageUrl: model.data.banners[index].image,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ],
