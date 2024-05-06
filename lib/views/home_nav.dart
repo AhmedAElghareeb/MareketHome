@@ -61,6 +61,16 @@ class _HomeNavState extends State<HomeNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Market Home",
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: pages[current],
       bottomSheet: Padding(
         padding: const EdgeInsets.only(
@@ -73,7 +83,7 @@ class _HomeNavState extends State<HomeNav> {
             borderRadius: BorderRadius.circular(
               12,
             ),
-            color: Colors.white,
+            color: Colors.white.withOpacity(0.75),
           ),
           child: Row(
             children: List.generate(

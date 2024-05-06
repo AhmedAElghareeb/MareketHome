@@ -57,11 +57,13 @@ class MyApp extends StatelessWidget {
         fontFamily: "BriemHand",
         platform: TargetPlatform.iOS,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
+          centerTitle: false,
+          titleSpacing: 18,
           elevation: 0,
         ),
-        bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: Colors.grey[100],
+        bottomSheetTheme: const BottomSheetThemeData(
+          backgroundColor: Colors.transparent,
         ),
         useMaterial3: false,
       ),

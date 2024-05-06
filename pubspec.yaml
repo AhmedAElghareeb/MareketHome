@@ -42,8 +42,9 @@ dependencies:
   shared_preferences: ^2.2.3
   conditional_builder_null_safety: ^0.0.6
   flash: ^3.1.0
-  font_awesome_flutter: ^10.7.0
   lottie: ^3.1.0
+  carousel_slider: ^4.2.1
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:

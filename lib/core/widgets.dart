@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -156,5 +157,35 @@ Widget buildAuthFooter(
             recognizer: TapGestureRecognizer()..onTap = onTap,
           ),
         ],
+      ),
+    );
+
+// void printFullText(String? text) {
+//   final pattern = RegExp('.{1,800}');
+//   pattern.allMatches(text!).forEach(
+//         (match) => print(
+//           match.group(
+//             0,
+//           ),
+//         ),
+//       );
+// }
+
+Widget cachedImage({
+  BoxFit? fit,
+  double? width,
+  double? height,
+  required String imageUrl,
+}) =>
+    CachedNetworkImage(
+      imageUrl: imageUrl,
+      width: width,
+      height: height,
+      fit: fit,
+      errorWidget: (context, url, error) => const Icon(
+        Icons.error_outline,
+      ),
+      placeholder: (context, url) => const Center(
+        child: CircularProgressIndicator(),
       ),
     );
