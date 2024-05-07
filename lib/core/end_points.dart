@@ -8,7 +8,7 @@ const categories = "categories";
 
 const productDetails = "";
 
-const favourites = "";
+const favourites = "favorites";
 
 const cart = "";
 

@@ -3,6 +3,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_home/core/helper.dart';
+import 'package:market_home/core/shimmer_loading.dart';
 import 'package:market_home/core/themes.dart';
 import 'package:market_home/core/widgets.dart';
 import 'package:market_home/views/base/categories/cubit.dart';
@@ -36,14 +37,12 @@ class HomeView extends StatelessWidget {
             child: ConditionalBuilder(
               condition: homeCubit.homeModel != null &&
                   categoriesCubit.categoriesModel != null,
-              builder: (context) => buildProductsBuilder(context,
-                  model: homeCubit.homeModel!,
-                  categoriesModel: categoriesCubit.categoriesModel!),
-              fallback: (context) => const Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                ),
+              builder: (context) => buildProductsBuilder(
+                context,
+                model: homeCubit.homeModel!,
+                categoriesModel: categoriesCubit.categoriesModel!,
               ),
+              fallback: (context) => const ShimmerLoading(),
             ),
           );
         },
@@ -99,9 +98,7 @@ class HomeView extends StatelessWidget {
             SizedBox(
               height: 150,
               child: ListView.builder(
-                padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: 12
-                ),
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
                 itemBuilder: (context, index) => buildCategoryItem(
                   categoriesModel.data.list[index],
                 ),
@@ -137,6 +134,7 @@ class HomeView extends StatelessWidget {
                 children: List.generate(
                   model.data.products.length,
                   (index) => buildItemOfGrid(
+                    context,
                     model.data.products[index],
                     index,
                   ),
@@ -179,7 +177,7 @@ class HomeView extends StatelessWidget {
         ),
       );
 
-  Widget buildItemOfGrid(ProductsModel model, int index) => Container(
+  Widget buildItemOfGrid(BuildContext context, ProductsModel model, int index) => Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -247,13 +245,17 @@ class HomeView extends StatelessWidget {
                       const Spacer(),
                       IconButton(
                         onPressed: () {
-                          // print("Added");
+                          HomeCubit.get(context).changeFavorites(model.id);
                         },
-                        icon: const Icon(
-                          Icons.favorite_border,
-                          size: 16,
+                        icon: CircleAvatar(
+                          radius: 15,
+                          backgroundColor: HomeCubit.get(context).favorites[model.id] != null ? AppColors.primary : Colors.grey,
+                          child: const Icon(
+                            Icons.favorite_border,
+                            size: 14,
+                            color: Colors.white,
+                          ),
                         ),
-                        padding: EdgeInsets.zero,
                         highlightColor: Colors.transparent,
                         splashColor: Colors.transparent,
                         hoverColor: Colors.transparent,
