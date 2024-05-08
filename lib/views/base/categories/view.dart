@@ -44,7 +44,7 @@ class CategoriesView extends StatelessWidget {
                 ),
                 itemCount: cubit.categoriesModel!.data.list.length,
               ),
-              fallback:(context) => ShimmerLoading(
+              fallback: (context) => ShimmerLoading(
                 child: buildShimmer(),
               ),
             );
@@ -60,9 +60,8 @@ class CategoriesView extends StatelessWidget {
           children: [
             Container(
               clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12)
-              ),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(12)),
               child: cachedImage(
                 imageUrl: model.image,
                 width: 130,
@@ -89,30 +88,48 @@ class CategoriesView extends StatelessWidget {
           ],
         ),
       );
+
   Widget buildShimmer() => Padding(
         padding: const EdgeInsetsDirectional.all(20),
-        child: Row(
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.grey
+        child: ListView.separated(
+          itemBuilder: (context, index) => Row(
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.grey),
               ),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Container(
-              width: 50,
-              height: 20,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey,
+              const SizedBox(
+                width: 20,
               ),
-            ),
-          ],
+              Container(
+                width: 120,
+                height: 20,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.grey,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+          separatorBuilder: (context, index) => Divider(
+            endIndent: 20,
+            indent: 20,
+            thickness: 4,
+            color: AppColors.primary.withOpacity(0.2),
+          ),
+          itemCount: 10,
         ),
       );
 }

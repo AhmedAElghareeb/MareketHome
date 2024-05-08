@@ -9,13 +9,3 @@ class FailedState extends HomeStates {
 
   FailedState(this.err);
 }
-
-class FavoritesState extends HomeStates {}
-
-class FavoritesSuccessState extends HomeStates {}
-
-class FavoritesFailedState extends HomeStates {
-  final String err;
-
-  FavoritesFailedState(this.err);
-}

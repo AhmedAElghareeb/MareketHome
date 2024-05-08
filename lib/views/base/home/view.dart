@@ -19,6 +19,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // bool isFavorites = false;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -27,6 +28,9 @@ class HomeView extends StatelessWidget {
         BlocProvider(
           create: (context) => CategoriesCubit()..getCategories(),
         ),
+        // BlocProvider(
+        //   create: (context) => FavoritesCubit(),
+        // ),
       ],
       child: BlocConsumer<HomeCubit, HomeStates>(
         listener: (context, state) {},
@@ -39,6 +43,7 @@ class HomeView extends StatelessWidget {
                   categoriesCubit.categoriesModel != null,
               builder: (context) => buildProductsBuilder(
                 context,
+                // isFavorites,
                 model: homeCubit.homeModel!,
                 categoriesModel: categoriesCubit.categoriesModel!,
               ),
@@ -51,6 +56,7 @@ class HomeView extends StatelessWidget {
   }
 
   Widget buildProductsBuilder(BuildContext context,
+          // bool isFav,
           {required HomeModel model,
           required CategoriesModel categoriesModel}) =>
       SingleChildScrollView(
@@ -137,6 +143,7 @@ class HomeView extends StatelessWidget {
                     context,
                     model.data.products[index],
                     index,
+                    // isFav,
                   ),
                 ),
               ),
@@ -169,7 +176,10 @@ class HomeView extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ],
@@ -177,7 +187,13 @@ class HomeView extends StatelessWidget {
         ),
       );
 
-  Widget buildItemOfGrid(BuildContext context, ProductsModel model, int index) => Container(
+  Widget buildItemOfGrid(
+    BuildContext context,
+    ProductsModel model,
+    int index,
+    // bool isFav,
+  ) =>
+      Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -242,26 +258,34 @@ class HomeView extends StatelessWidget {
                               color: Colors.grey,
                               decoration: TextDecoration.lineThrough),
                         ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          HomeCubit.get(context).changeFavorites(model.id);
-                        },
-                        icon: CircleAvatar(
-                          radius: 15,
-                          backgroundColor: HomeCubit.get(context).favorites[model.id] != null ? AppColors.primary : Colors.grey,
-                          child: const Icon(
-                            Icons.favorite_border,
-                            size: 14,
-                            color: Colors.white,
-                          ),
-                        ),
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        disabledColor: Colors.transparent,
-                      ),
+                      // const Spacer(),
+                      // IconButton(
+                      //   onPressed: () {
+                      //     // if(isFav)
+                      //     // {
+                      //     //   FavoritesCubit.get(context).changeFavorites(
+                      //     //     id: model.id,
+                      //     //   );
+                      //     // } else
+                      //     // {
+                      //     //
+                      //     // }
+                      //   },
+                      //   icon: CircleAvatar(
+                      //     radius: 15,
+                      //     // backgroundColor: HomeCubit.get(context).homeModel!.data.products[index].inFavourite ? AppColors.primary : Colors.grey,
+                      //     child: const Icon(
+                      //       Icons.favorite_border,
+                      //       size: 14,
+                      //       color: Colors.white,
+                      //     ),
+                      //   ),
+                      //   highlightColor: Colors.transparent,
+                      //   splashColor: Colors.transparent,
+                      //   hoverColor: Colors.transparent,
+                      //   focusColor: Colors.transparent,
+                      //   disabledColor: Colors.transparent,
+                      // ),
                     ],
                   ),
                 ],

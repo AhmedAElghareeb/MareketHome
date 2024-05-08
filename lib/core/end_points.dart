@@ -14,7 +14,7 @@ const cart = "";
 
 const orders = "";
 
-const notifications = "";
+const notifications = "notifications";
 
 const faqs = "";
 
