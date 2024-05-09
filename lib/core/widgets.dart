@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:market_home/core/themes.dart';
 
 Widget appInput(
   BuildContext context, {
@@ -189,3 +190,10 @@ Widget cachedImage({
         child: CircularProgressIndicator(),
       ),
     );
+
+Widget buildDivider() => Divider(
+  endIndent: 20,
+  indent: 20,
+  thickness: 4,
+  color: AppColors.primary.withOpacity(0.2),
+);

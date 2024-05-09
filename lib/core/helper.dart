@@ -63,6 +63,18 @@ class FlashHelper {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text(
+                  msg,
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  softWrap: true,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
                 Container(
                   height: 24,
                   width: 24,
@@ -74,20 +86,6 @@ class FlashHelper {
                     height: 19,
                     width: 24,
                     color: _getBgColor(type),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    msg,
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.end,
-                    softWrap: true,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
                   ),
                 ),
               ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_home/core/shimmer_loading.dart';
 import 'package:market_home/core/themes.dart';
+import 'package:market_home/core/widgets.dart';
 import 'package:market_home/views/base/notification/cubit.dart';
 import 'package:market_home/views/base/notification/model.dart';
 import 'package:market_home/views/base/notification/states.dart';
@@ -25,12 +26,7 @@ class NotificationView extends StatelessWidget {
                   itemBuilder: (context, index) => buildListItem(
                     model: cubit.model!.data.list[index],
                   ),
-                  separatorBuilder: (context, index) => Divider(
-                    endIndent: 20,
-                    indent: 20,
-                    thickness: 4,
-                    color: AppColors.primary.withOpacity(0.2),
-                  ),
+                  separatorBuilder: (context, index) => buildDivider(),
                   itemCount: cubit.model!.data.list.length,
                 ),
                 fallback: (context) => ShimmerLoading(

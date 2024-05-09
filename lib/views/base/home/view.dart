@@ -19,7 +19,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // bool isFavorites = false;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -28,12 +27,17 @@ class HomeView extends StatelessWidget {
         BlocProvider(
           create: (context) => CategoriesCubit()..getCategories(),
         ),
-        // BlocProvider(
-        //   create: (context) => FavoritesCubit(),
-        // ),
       ],
       child: BlocConsumer<HomeCubit, HomeStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is ChangeFavSuccess) {
+            if (!state.model.status) {
+              FlashHelper.showToast(state.model.message);
+            } else {
+              FlashHelper.showToast(state.model.message, type: MessageType.success);
+            }
+          }
+        },
         builder: (context, state) {
           final homeCubit = HomeCubit.get(context);
           final categoriesCubit = CategoriesCubit.get(context);
@@ -43,7 +47,6 @@ class HomeView extends StatelessWidget {
                   categoriesCubit.categoriesModel != null,
               builder: (context) => buildProductsBuilder(
                 context,
-                // isFavorites,
                 model: homeCubit.homeModel!,
                 categoriesModel: categoriesCubit.categoriesModel!,
               ),
@@ -56,7 +59,6 @@ class HomeView extends StatelessWidget {
   }
 
   Widget buildProductsBuilder(BuildContext context,
-          // bool isFav,
           {required HomeModel model,
           required CategoriesModel categoriesModel}) =>
       SingleChildScrollView(
@@ -191,7 +193,6 @@ class HomeView extends StatelessWidget {
     BuildContext context,
     ProductsModel model,
     int index,
-    // bool isFav,
   ) =>
       Container(
         clipBehavior: Clip.antiAlias,
@@ -258,34 +259,36 @@ class HomeView extends StatelessWidget {
                               color: Colors.grey,
                               decoration: TextDecoration.lineThrough),
                         ),
-                      // const Spacer(),
-                      // IconButton(
-                      //   onPressed: () {
-                      //     // if(isFav)
-                      //     // {
-                      //     //   FavoritesCubit.get(context).changeFavorites(
-                      //     //     id: model.id,
-                      //     //   );
-                      //     // } else
-                      //     // {
-                      //     //
-                      //     // }
-                      //   },
-                      //   icon: CircleAvatar(
-                      //     radius: 15,
-                      //     // backgroundColor: HomeCubit.get(context).homeModel!.data.products[index].inFavourite ? AppColors.primary : Colors.grey,
-                      //     child: const Icon(
-                      //       Icons.favorite_border,
-                      //       size: 14,
-                      //       color: Colors.white,
-                      //     ),
-                      //   ),
-                      //   highlightColor: Colors.transparent,
-                      //   splashColor: Colors.transparent,
-                      //   hoverColor: Colors.transparent,
-                      //   focusColor: Colors.transparent,
-                      //   disabledColor: Colors.transparent,
-                      // ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          HomeCubit.get(context).addToFavorites(id: model.id);
+                        },
+                        padding: EdgeInsets.zero,
+                        icon: Container(
+                          width: 25,
+                          height: 25,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.primary.withOpacity(0.5)),
+                          child: Center(
+                            child: Icon(
+                              HomeCubit.get(context).fav[model.id]!
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 15,
+                              color: HomeCubit.get(context).fav[model.id]!
+                                  ? Colors.red
+                                  : Colors.white,
+                            ),
+                          ),
+                        ),
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        disabledColor: Colors.transparent,
+                      ),
                     ],
                   ),
                 ],

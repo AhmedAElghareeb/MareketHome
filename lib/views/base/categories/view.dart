@@ -36,12 +36,7 @@ class CategoriesView extends StatelessWidget {
                 itemBuilder: (context, index) => buildCategoryItem(
                   model: cubit.categoriesModel!.data.list[index],
                 ),
-                separatorBuilder: (context, index) => Divider(
-                  endIndent: 20,
-                  indent: 20,
-                  thickness: 4,
-                  color: AppColors.primary.withOpacity(0.2),
-                ),
+                separatorBuilder: (context, index) => buildDivider(),
                 itemCount: cubit.categoriesModel!.data.list.length,
               ),
               fallback: (context) => ShimmerLoading(
