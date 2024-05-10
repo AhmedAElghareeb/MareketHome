@@ -5,6 +5,8 @@ import 'package:market_home/core/themes.dart';
 import 'package:market_home/core/widgets.dart';
 import 'package:market_home/views/auth/login/view.dart';
 import 'package:market_home/views/base/settings/widgets/about_conditions.dart';
+import 'package:market_home/views/base/settings/widgets/complaints.dart';
+import 'package:market_home/views/base/settings/widgets/faqs.dart';
 import 'package:market_home/views/base/settings/widgets/profile.dart';
 
 class SettingsView extends StatelessWidget {
@@ -41,6 +43,18 @@ class SettingsView extends StatelessWidget {
                       type: "Terms and Conditions",
                     ),
                   );
+                },
+              ),
+              buildSettingItem(
+                title: "Faqs",
+                onTap: () {
+                  push(const FaqsView());
+                },
+              ),
+              buildSettingItem(
+                title: "Complaints",
+                onTap: () {
+                  push(ComplaintsView());
                 },
               ),
               const SizedBox(
@@ -81,8 +95,9 @@ class SettingsView extends StatelessWidget {
             horizontal: 16,
           ),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: AppColors.primary.withOpacity(0.2)),
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.grey[50],
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -101,12 +116,12 @@ class SettingsView extends StatelessWidget {
                   height: 25,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: AppColors.primary,
+                    color: Colors.white,
                   ),
                   child: const Center(
                     child: Icon(
                       Icons.arrow_forward_ios,
-                      color: Colors.white,
+                      color: AppColors.primary,
                       size: 14,
                     ),
                   ),

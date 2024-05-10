@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_home/core/shimmer_loading.dart';
 import 'package:market_home/core/themes.dart';
 import 'package:market_home/core/widgets.dart';
-import 'package:market_home/views/base/favourite/model.dart';
 import 'package:market_home/views/base/home/cubit.dart';
 import 'package:market_home/views/base/home/states.dart';
 
@@ -33,7 +32,7 @@ class FavouriteView extends StatelessWidget {
                   condition: state is! LoadingFavoriteState,
                   builder: (context) => ListView.separated(
                     itemBuilder: (context, index) => buildFavoriteItem(
-                      model: cubit.model!.data.list[index],
+                      model: cubit.model!.data.list[index].product,
                       context,
                     ),
                     separatorBuilder: (context, index) => buildDivider(),
@@ -48,9 +47,7 @@ class FavouriteView extends StatelessWidget {
     );
   }
 
-  Widget buildFavoriteItem(BuildContext context,
-          {required FavDataModel model}) =>
-      Padding(
+  Widget buildFavoriteItem(BuildContext context, {required model}) => Padding(
         padding: const EdgeInsetsDirectional.all(20),
         child: Container(
           clipBehavior: Clip.antiAlias,
@@ -69,18 +66,18 @@ class FavouriteView extends StatelessWidget {
                   alignment: AlignmentDirectional.topEnd,
                   children: [
                     cachedImage(
-                      imageUrl: model.product.image,
+                      imageUrl: model.image,
                       width: 150,
                       height: 150,
                       fit: BoxFit.cover,
                     ),
-                    if (model.product.discount != 0)
+                    if (model.discount != 0)
                       Container(
                         color: Colors.lightBlue,
                         padding: const EdgeInsetsDirectional.symmetric(
                             horizontal: 5),
                         child: Text(
-                          "${model.product.discount} %",
+                          "${model.discount} %",
                           style: const TextStyle(
                               fontSize: 10, color: Colors.white),
                         ),
@@ -96,7 +93,7 @@ class FavouriteView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      model.product.name,
+                      model.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -108,7 +105,7 @@ class FavouriteView extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "${model.product.price} EGP",
+                          "${model.price} EGP",
                           style: const TextStyle(
                             fontSize: 12,
                             color: AppColors.primary,
@@ -117,9 +114,9 @@ class FavouriteView extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        if (model.product.discount != 0)
+                        if (model.discount != 0)
                           Text(
-                            "${model.product.oldPrice} EGP",
+                            "${model.oldPrice} EGP",
                             style: const TextStyle(
                                 fontSize: 10,
                                 color: Colors.grey,
@@ -129,7 +126,7 @@ class FavouriteView extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             HomeCubit.get(context)
-                                .addToFavorites(id: model.product.id);
+                                .addToFavorites(id: model.id);
                           },
                           padding: EdgeInsets.zero,
                           icon: Container(
@@ -140,12 +137,12 @@ class FavouriteView extends StatelessWidget {
                                 color: AppColors.primary.withOpacity(0.5)),
                             child: Center(
                               child: Icon(
-                                HomeCubit.get(context).fav[model.product.id]!
+                                HomeCubit.get(context).fav[model.id]!
                                     ? Icons.favorite
                                     : Icons.favorite_border,
                                 size: 15,
                                 color: HomeCubit.get(context)
-                                        .fav[model.product.id]!
+                                        .fav[model.id]!
                                     ? Colors.red
                                     : Colors.white,
                               ),

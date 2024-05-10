@@ -57,18 +57,18 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey[100],
         fontFamily: "BriemHand",
         platform: TargetPlatform.iOS,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey[100],
           centerTitle: false,
           titleSpacing: 12,
           elevation: 0,
-          titleTextStyle: TextStyle(
+          titleTextStyle: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w700,
             color: Colors.black,
             fontFamily: "BriemHand",
           ),
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.black,
           ),
         ),

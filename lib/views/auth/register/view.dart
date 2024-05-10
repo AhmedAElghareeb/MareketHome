@@ -31,8 +31,10 @@ class RegisterView extends StatelessWidget {
               CachedData.saveUserData(
                 key: "token",
                 value: state.loginModel.data.token,
-              );
-              pushAndRemoveUntil(LoginView());
+              ).then((value) {
+                token = state.loginModel.data.token;
+                pushAndRemoveUntil(LoginView());
+              });
             } else {
               FlashHelper.showToast(state.loginModel.message);
             }

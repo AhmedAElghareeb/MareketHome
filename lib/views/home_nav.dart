@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:market_home/core/custom_image.dart';
+import 'package:market_home/core/helper.dart';
 import 'package:market_home/core/themes.dart';
 import 'package:market_home/views/base/favourite/view.dart';
 import 'package:market_home/views/base/home/view.dart';
 import 'package:market_home/views/base/notification/view.dart';
+import 'package:market_home/views/base/search/view.dart';
 import 'package:market_home/views/base/settings/view.dart';
 
 class HomeNav extends StatefulWidget {
@@ -64,6 +66,21 @@ class _HomeNavState extends State<HomeNav> {
             color: Colors.black,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              push(
+                SearchView(),
+              );
+            },
+            icon: const Icon(Icons.search),
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            disabledColor: Colors.transparent,
+          ),
+        ],
       ),
       body: pages[current],
       bottomSheet: Padding(

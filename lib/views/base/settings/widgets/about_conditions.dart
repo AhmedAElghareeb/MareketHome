@@ -17,15 +17,14 @@ class AboutView extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           final cubit = SettingsCubit.get(context);
-          return ConditionalBuilder(
-            condition: state is! LoadingSettingsState,
-            builder: (context) => Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  type,
-                ),
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                type,
               ),
-              body: SingleChildScrollView(
+            ),
+            body: ConditionalBuilder(
+              builder: (context) => SingleChildScrollView(
                 padding: const EdgeInsetsDirectional.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,9 +47,10 @@ class AboutView extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            fallback: (context) => ShimmerLoading(
-              child: buildShimmer(),
+              condition: state is! LoadingSettingsState,
+              fallback: (context) => ShimmerLoading(
+                child: buildShimmer(),
+              ),
             ),
           );
         },
@@ -58,7 +58,44 @@ class AboutView extends StatelessWidget {
     );
   }
 
-  Widget buildShimmer() => Container(
-        color: Colors.grey,
-      );
+  Widget buildShimmer() => SingleChildScrollView(
+    padding: const EdgeInsetsDirectional.all(20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Container(
+            width: 150,
+            height: 150,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.grey
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 40,
+        ),
+        Container(
+          width: 100,
+          height: 20,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.grey
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          width: 300,
+          height: 150,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.grey
+          ),
+        ),
+      ],
+    ),
+  );
 }

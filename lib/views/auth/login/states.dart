@@ -10,11 +10,22 @@ class SuccessLoginState extends LoginStates {
   SuccessLoginState(this.loginModel);
 }
 
-class FailedLoginState extends LoginStates
-{
+class FailedLoginState extends LoginStates {
   final String error;
 
   FailedLoginState(this.error);
 }
 
 class ChangePassState extends LoginStates {}
+
+class UserDataLoadingState extends LoginStates {}
+
+class UserDataSuccessState extends LoginStates {}
+
+class UserDataFailedState extends LoginStates {}
+
+class UserUpdateDataLoadingState extends LoginStates {}
+
+class UserUpdateDataSuccessState extends LoginStates {}
+
+class UserUpdateDataFailedState extends LoginStates {}

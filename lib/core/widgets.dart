@@ -11,6 +11,7 @@ Widget appInput(
   required TextInputType textInputType,
   required IconData prefixIcon,
   VoidCallback? onSuffixPressed,
+  Function(String)? onSubmit,
   IconData? suffixIcon,
   bool isPassword = false,
 }) =>
@@ -29,6 +30,7 @@ Widget appInput(
       },
       keyboardType: textInputType,
       obscureText: isPassword,
+      onFieldSubmitted: onSubmit,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_home/core/end_points.dart';
+import 'package:market_home/core/widgets.dart';
 import 'package:market_home/services/dio.dart';
 import 'package:market_home/views/auth/login/model.dart';
 import 'package:market_home/views/auth/login/states.dart';
@@ -36,6 +37,45 @@ class LoginCubit extends Cubit<LoginStates> {
           error.toString(),
         ),
       );
+    });
+  }
+
+  void getUserData() {
+    emit(UserDataLoadingState());
+
+    DioHelper.i
+        .getData(
+      path: getProfile,
+      token: token,
+    )
+        .then((value) {
+      loginModel = LoginModel.fromJson(value.data);
+      emit(UserDataSuccessState());
+    }).catchError((err) {
+      emit(UserDataFailedState());
+    });
+  }
+
+  void userUpdate({
+    required String name,
+    required String email,
+    required String phone,
+  }) {
+    emit(UserUpdateDataLoadingState());
+
+    DioHelper.i.putData(
+      path: updateProfile,
+      token: token,
+      data: {
+        "name": name,
+        "email": email,
+        "phone": phone,
+      },
+    ).then((value) {
+      loginModel = LoginModel.fromJson(value.data);
+      emit(UserUpdateDataSuccessState());
+    }).catchError((err) {
+      emit(UserUpdateDataFailedState());
     });
   }
 

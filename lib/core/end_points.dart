@@ -14,10 +14,16 @@ const notifications = "notifications";
 
 const settings = "settings";
 
+const getProfile = "profile";
+
+const updateProfile = "update-profile";
+
+const search = "products/search";
+
+const faqs = "faqs";
+
+const complaints = "complaints";
+
 const cart = "";
 
 const orders = "";
-
-const faqs = "";
-
-const complaints = "";
