@@ -19,59 +19,57 @@ class SearchView extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           final cubit = SearchCubit.get(context);
-          return SafeArea(
-            child: Scaffold(
-              appBar: AppBar(
-                title: const Text(
-                  "Search",
-                ),
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                "Search",
               ),
-              body: Form(
-                key: formKey,
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.all(16),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
+            ),
+            body: Form(
+              key: formKey,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.all(16),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    appInput(
+                      context,
+                      label: "Search",
+                      controller: search,
+                      textInputType: TextInputType.text,
+                      prefixIcon: Icons.search,
+                      onSubmit: (text) {
+                        cubit.searchData(
+                          text: text,
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    if (state is LoadingSearchState)
+                      const LinearProgressIndicator(
+                        minHeight: 7,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
-                      appInput(
-                        context,
-                        label: "Search",
-                        controller: search,
-                        textInputType: TextInputType.text,
-                        prefixIcon: Icons.search,
-                        onSubmit: (text) {
-                          cubit.searchData(
-                            text: text,
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      if (state is LoadingSearchState)
-                        const LinearProgressIndicator(
-                          minHeight: 7,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      if (state is SuccessSearchState)
-                        Expanded(
-                          child: ListView.separated(
-                            itemBuilder: (context, index) => buildSearchItem(
-                              context,
-                              cubit.model!.data.list[index],
-                            ),
-                            separatorBuilder: (context, index) =>
-                                buildDivider(),
-                            itemCount: cubit.model!.data.list.length,
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    if (state is SuccessSearchState)
+                      Expanded(
+                        child: ListView.separated(
+                          itemBuilder: (context, index) => buildSearchItem(
+                            context,
+                            cubit.model!.data.list[index],
                           ),
+                          separatorBuilder: (context, index) =>
+                              buildDivider(),
+                          itemCount: cubit.model!.data.list.length,
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
               ),
             ),
