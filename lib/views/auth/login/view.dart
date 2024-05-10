@@ -17,7 +17,6 @@ class LoginView extends StatelessWidget {
 
   final formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -26,13 +25,20 @@ class LoginView extends StatelessWidget {
         listener: (context, state) {
           if (state is SuccessLoginState) {
             if (state.loginModel.status) {
-              FlashHelper.showToast(state.loginModel.message,
-                  type: MessageType.success);
+              FlashHelper.showToast(
+                state.loginModel.message,
+                type: MessageType.success,
+              );
               CachedData.saveUserData(
                 key: "token",
                 value: state.loginModel.data.token,
-              );
-              pushAndRemoveUntil(const HomeNav());
+              ).then((value) {
+                token = state.loginModel.data.token;
+
+                pushAndRemoveUntil(
+                  const HomeNav(),
+                );
+              });
             } else {
               FlashHelper.showToast(state.loginModel.message);
             }

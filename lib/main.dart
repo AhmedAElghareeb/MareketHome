@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:market_home/core/cache.dart';
 import 'package:market_home/core/helper.dart';
+import 'package:market_home/core/widgets.dart';
 import 'package:market_home/observer.dart';
 import 'package:market_home/views/auth/login/view.dart';
 import 'package:market_home/views/home_nav.dart';
@@ -11,8 +12,8 @@ import 'package:market_home/views/onboarding_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: Colors.grey[100],
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ),
   );
@@ -22,7 +23,7 @@ void main() async {
   Widget widget = const OnBoardingView();
 
   bool onBoarding = CachedData.getData(key: "onBoarding") ?? false;
-  String token = CachedData.getData(key: "token") ?? "";
+  token = CachedData.getData(key: "token") ?? "";
 
   if (onBoarding) {
     if (token.isNotEmpty) {
@@ -61,6 +62,12 @@ class MyApp extends StatelessWidget {
           centerTitle: false,
           titleSpacing: 12,
           elevation: 0,
+          titleTextStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            fontFamily: "BriemHand",
+          ),
           iconTheme: IconThemeData(
             color: Colors.black,
           ),

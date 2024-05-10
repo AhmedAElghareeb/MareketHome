@@ -197,3 +197,5 @@ Widget buildDivider() => Divider(
   thickness: 4,
   color: AppColors.primary.withOpacity(0.2),
 );
+
+String token = "";

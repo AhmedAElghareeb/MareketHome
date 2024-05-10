@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:market_home/core/cache.dart';
 import 'package:market_home/core/end_points.dart';
+import 'package:market_home/core/widgets.dart';
 import 'package:market_home/services/dio.dart';
 import 'package:market_home/views/base/favourite/change_favorite.dart';
 import 'package:market_home/views/base/favourite/model.dart';
@@ -20,9 +20,7 @@ class HomeCubit extends Cubit<HomeStates> {
     DioHelper.i
         .getData(
       path: home,
-      token: CachedData.getData(
-        key: "token",
-      ),
+      token: token,
     )
         .then((value) {
       homeModel = HomeModel.fromJson(
@@ -54,9 +52,7 @@ class HomeCubit extends Cubit<HomeStates> {
       data: {
         "product_id": id,
       },
-      token: CachedData.getData(
-        key: "token",
-      ),
+      token: token,
     )
         .then((value) {
       favChangeModel = FavChangeModel.fromJson(value.data);
@@ -84,7 +80,7 @@ class HomeCubit extends Cubit<HomeStates> {
     DioHelper.i
         .getData(
       path: favourites,
-      token: CachedData.getData(key: "token"),
+      token: token,
     )
         .then((value) {
       model = FavoritesModel.fromJson(value.data);

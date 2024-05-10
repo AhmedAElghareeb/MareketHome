@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:market_home/core/cache.dart';
+import 'package:market_home/core/helper.dart';
 import 'package:market_home/core/themes.dart';
 import 'package:market_home/core/widgets.dart';
+import 'package:market_home/views/auth/login/view.dart';
+import 'package:market_home/views/base/settings/widgets/about_conditions.dart';
+import 'package:market_home/views/base/settings/widgets/profile.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -14,15 +19,29 @@ class SettingsView extends StatelessWidget {
             children: [
               buildSettingItem(
                 title: "Profile",
-                onTap: () {},
+                onTap: () {
+                  push(ProfileView());
+                },
               ),
               buildSettingItem(
                 title: "About",
-                onTap: () {},
+                onTap: () {
+                  push(
+                    const AboutView(
+                      type: "About",
+                    ),
+                  );
+                },
               ),
               buildSettingItem(
                 title: "Terms and Conditions",
-                onTap: () {},
+                onTap: () {
+                  push(
+                    const AboutView(
+                      type: "Terms and Conditions",
+                    ),
+                  );
+                },
               ),
               const SizedBox(
                 height: 100,
@@ -32,7 +51,9 @@ class SettingsView extends StatelessWidget {
                 text: "Log Out",
                 width: 200,
                 height: 50,
-                onPress: () {},
+                onPress: () {
+                  signOut();
+                },
               ),
               const SizedBox(
                 height: 130,
@@ -95,4 +116,14 @@ class SettingsView extends StatelessWidget {
           ),
         ),
       );
+
+  void signOut() {
+    CachedData.clearUserData().then((value) {
+      if (value) {
+        pushAndRemoveUntil(
+          LoginView(),
+        );
+      }
+    });
+  }
 }

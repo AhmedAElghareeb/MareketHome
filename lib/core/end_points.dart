@@ -10,14 +10,14 @@ const productDetails = "";
 
 const favourites = "favorites";
 
+const notifications = "notifications";
+
+const settings = "settings";
+
 const cart = "";
 
 const orders = "";
 
-const notifications = "notifications";
-
 const faqs = "";
-
-const about = "";
 
 const complaints = "";
